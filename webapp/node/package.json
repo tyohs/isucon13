@@ -5,7 +5,8 @@
     "start": "tsx watch src/main.ts",
     "test": "tsx --test src/utils/*.test.ts",
     "format": "prettier -w src",
-    "lint": "eslint --fix src"
+    "lint": "eslint --fix src",
+    "test:icons:mysql": "tsx --test tests/icon-update.mysql.test.ts"
   },
   "keywords": [],
   "overrides": {
