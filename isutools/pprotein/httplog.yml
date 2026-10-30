@@ -1,0 +1,17 @@
+matching_groups:
+  - ^/api/livestream/[0-9]+/livecomment/[0-9]+/report$
+  - ^/api/livestream/[0-9]+/livecomment$
+  - ^/api/livestream/[0-9]+/reaction$
+  - ^/api/livestream/[0-9]+/report$
+  - ^/api/livestream/[0-9]+/ngwords$
+  - ^/api/livestream/[0-9]+/moderate$
+  - ^/api/livestream/[0-9]+/enter$
+  - ^/api/livestream/[0-9]+/exit$
+  - ^/api/livestream/[0-9]+/statistics$
+  - ^/api/livestream/[0-9]+$
+  - ^/api/user/[^/]+/theme$
+  - ^/api/user/[^/]+/livestream$
+  - ^/api/user/[^/]+/statistics$
+  - ^/api/user/[^/]+/icon$
+  - ^/api/user/me$
+  - ^/api/user/[^/]+$
