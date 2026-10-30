@@ -2,7 +2,7 @@
 # bootstrap（手元側）: Ansible が isutools/.bootstrap/ に集めたサーバの初期状態を
 # リポジトリに取り込み、初期コミットを main に push する。
 #
-# 入力: isutools/.bootstrap/<host>/{etc/nginx,etc/mysql,etc/systemd/system/<APP_SERVICE>,home/isucon/*,ip}
+# 入力: isutools/.bootstrap/<host>/{etc/nginx,etc/mysql,etc/powerdns（存在時）,etc/systemd/system/<APP_SERVICE>,home/isucon/*,ip}
 #       isutools/.bootstrap/s1/webapp/
 # 2回目以降（すでに取り込み済み）は何もしない。取り込み後の main を上書きしないため。
 set -euo pipefail

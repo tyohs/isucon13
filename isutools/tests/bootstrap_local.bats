@@ -61,6 +61,18 @@ origin_files() { git -C "$TMP/origin.git" ls-tree -r --name-only main; }
   refute_contains "webapp/sql/initial.sql"
 }
 
+@test "imports optional PowerDNS configuration into the initial commit" {
+  mkdir -p "$B/s1/etc/powerdns/pdns.d"
+  echo "launch=gmysql" >"$B/s1/etc/powerdns/pdns.conf"
+  echo "gmysql-host=localhost" >"$B/s1/etc/powerdns/pdns.d/gmysql-host.conf"
+  bl
+  assert_success
+  run origin_files
+  assert_contains "s1/etc/powerdns/pdns.conf"
+  assert_contains "s1/etc/powerdns/pdns.d/gmysql-host.conf"
+  refute_contains "s2/etc/powerdns"
+}
+
 @test "rerun makes no new commit" {
   bl
   assert_success

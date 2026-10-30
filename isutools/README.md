@@ -63,7 +63,7 @@ bootstrap を実行する人だけ、追加で `uv tool install ansible-core`（
 
 3. `task bootstrap`（main ブランチで実行）。やること:
    - 3台に alp / slp / pprotein-agent（s3 には pprotein も）をインストール
-   - 元の `/etc/nginx` `/etc/mysql` を `/home/isucon/backup/` に退避
+   - 元の `/etc/nginx` `/etc/mysql` と、存在する場合は `/etc/powerdns` を `/home/isucon/backup/` に退避し、ホスト別の設定として取り込み・コミット
    - 3台の設定と s1 の `webapp/` を手元に集めて、初期コミットを main に push
    - 3台の `/home/isucon` をこのリポジトリに合わせる
    - nginx のアクセスログ（LTSV）と MySQL の slow log（`long_query_time=0`）を有効にして初回デプロイ

@@ -61,11 +61,11 @@
         key: "{{ lookup('ansible.builtin.pipe', 'ssh-keyscan -t ed25519 github.com 2>/dev/null') }}"
         path: /home/isucon/.ssh/known_hosts
 
-    - name: Back up original /etc/nginx and /etc/mysql (first run only)
+    - name: Back up original /etc/nginx, /etc/mysql and optional /etc/powerdns (first run only)
       ansible.builtin.shell: |
         set -e
         mkdir -p /home/isucon/backup/etc
-        for d in nginx mysql; do
+        for d in nginx mysql powerdns; do
           [ ! -d "/etc/$d" ] || cp -a "/etc/$d" /home/isucon/backup/etc/
         done
         chown -R isucon:isucon /home/isucon/backup
@@ -104,6 +104,18 @@
         dest: "{{ out }}/etc/{{ item }}/"
         rsync_opts: ["--exclude=debian.cnf"]
       loop: [nginx, mysql]
+
+    - name: Check for PowerDNS configuration
+      ansible.builtin.stat:
+        path: /etc/powerdns
+      register: powerdns_config
+
+    - name: Pull /etc/powerdns when present
+      ansible.posix.synchronize:
+        mode: pull
+        src: /etc/powerdns/
+        dest: "{{ out }}/etc/powerdns/"
+      when: powerdns_config.stat.isdir | default(false)
 
     - name: Find the app unit file  # noqa: command-instead-of-module 読み取りのみ
       ansible.builtin.command: systemctl show -p FragmentPath --value {{ app_service }}
