@@ -9,6 +9,7 @@ setup() {
   export LOGS="$TMP/logs"
   mkdir -p "$LOGS/nginx" "$LOGS/mysql"
   sed -e 's/^APP_SERVICE=.*/APP_SERVICE=isuapp-node.service/' \
+    -e 's|^APP_DIR=.*|APP_DIR=webapp/nodejs|' \
     -e "s|^NGINX_LOG=.*|NGINX_LOG=$LOGS/nginx/access.log|" \
     -e "s|^SLOW_LOG=.*|SLOW_LOG=$LOGS/mysql/slow.log|" \
     "$SRC_ROOT/isutools/config.env" >"$R/isutools/config.env"
@@ -92,6 +93,44 @@ calls() { cat "$H/calls.log" 2>/dev/null || true; }
   assert_contains "systemctl restart pprotein.service"
   refute_contains "systemctl enable"
   refute_contains "systemctl disable"
+}
+
+@test "copies PowerDNS configuration and restarts enabled PowerDNS" {
+  mkdir -p "$R/s1/etc/powerdns/pdns.d"
+  echo "launch=gmysql" >"$R/s1/etc/powerdns/pdns.conf"
+  echo "gmysql-host=localhost" >"$R/s1/etc/powerdns/pdns.d/gmysql-host.conf"
+  echo pdns.service >>"$H/enabled"
+  deploy
+  assert_success
+  assert_file_contains "$H/etc/powerdns/pdns.conf" "launch=gmysql"
+  assert_file_contains "$H/etc/powerdns/pdns.d/gmysql-host.conf" "gmysql-host=localhost"
+  run calls
+  assert_contains "systemctl restart pdns.service"
+  assert_contains "systemctl is-active pdns.service"
+}
+
+@test "does not restart PowerDNS without managed configuration or when disabled" {
+  echo pdns.service >>"$H/enabled"
+  deploy
+  assert_success
+  run calls
+  refute_contains "systemctl restart pdns.service"
+  sed -i '/^pdns.service$/d' "$H/enabled"
+  mkdir -p "$R/s1/etc/powerdns"
+  deploy
+  assert_success
+  run calls
+  refute_contains "systemctl restart pdns.service"
+}
+
+@test "fails at powerdns when PowerDNS is inactive after restart" {
+  mkdir -p "$R/s1/etc/powerdns"
+  echo pdns.service >>"$H/enabled"
+  echo pdns.service >"$H/inactive"
+  deploy
+  assert_failure
+  assert_contains "ISUTOOLS_RESULT status=ng"
+  assert_contains "step=powerdns"
 }
 
 @test "truncates logs" {

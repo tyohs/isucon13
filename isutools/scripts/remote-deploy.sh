@@ -96,6 +96,18 @@ for svc in "$DB_SERVICE" nginx "$APP_SERVICE"; do
   fi
 done
 
+step=powerdns
+# 設定を管理しているホストだけ、配置済みの設定を PowerDNS に反映する。
+if [ -d "$REPO_ROOT/$HOST/etc/powerdns" ] && is_enabled pdns.service; then
+  echo "[$HOST] restart pdns.service"
+  isu_sudo systemctl restart pdns.service
+  if ! systemctl is-active pdns.service >/dev/null 2>&1; then
+    echo "[$HOST] pdns.service が起動していません"
+    isu_sudo journalctl -u pdns.service -n 20 --no-pager 2>/dev/null || true
+    exit 1
+  fi
+fi
+
 step=app-health
 # systemctl restart は Type=simple だとプロセスがすぐ落ちても成功を返すため、少し待って生存を確認する
 if is_enabled "$APP_SERVICE"; then

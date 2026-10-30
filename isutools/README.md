@@ -91,11 +91,12 @@ task deploy          # 現在ブランチを3台に反映（結果は Discord �
 - `task deploy` は **push 済みの内容**を反映する。未 push・リモートとのズレがあれば何もせずに止まる
 - 別ブランチを反映するなら `task deploy BRANCH=feature/yyy`
 - 他の人がデプロイ中ならロックで止まる。冒頭に「直前に誰が何を反映したか」が出る
-- サーバの設定（nginx / MySQL / systemd）は `s1/` `s2/` `s3/` 配下を編集する。deploy が `/etc` に配置する
+- サーバの設定（nginx / MySQL / PowerDNS / systemd）は `s1/` `s2/` `s3/` 配下を編集する。deploy が `/etc` に配置する
   （`/etc` を直接いじっても次のデプロイで上書きされる）
 - ログ・計測の停止と再開は手動で行う。設定変更は該当ホストのファイルに反映する。
   deploy は有効なサービスだけを再起動し、サービスの有効化・無効化は変更しない。
   pprotein / agent の初回有効化は bootstrap で行う。
+  PowerDNS はホスト別の `etc/powerdns/` があり、`pdns.service` が有効な場合に再起動し、起動状態を確認する。
 
 ## コマンド一覧
 
