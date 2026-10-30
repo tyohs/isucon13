@@ -73,9 +73,24 @@ export const postIconHandler = [
     await conn.beginTransaction()
 
     try {
+      // 同じユーザーの更新を直列化し、アイコン取得前にロックを取る。
       await conn
-        .execute('DELETE FROM icons WHERE user_id = ?', [userId])
-        .catch(throwErrorWith('failed to delete old user icon'))
+        .execute('SELECT id FROM users WHERE id = ? FOR UPDATE', [userId])
+        .catch(throwErrorWith('failed to lock user'))
+
+      const [icons] = await conn
+        .query<(Pick<IconModel, 'id'> & RowDataPacket)[]>(
+          'SELECT id FROM icons WHERE user_id = ?',
+          [userId],
+        )
+        .catch(throwErrorWith('failed to get old user icons'))
+
+      // user_idの範囲DELETEによるギャップロックを避け、存在する主キーで削除する。
+      for (const icon of icons) {
+        await conn
+          .execute('DELETE FROM icons WHERE id = ?', [icon.id])
+          .catch(throwErrorWith('failed to delete old user icon'))
+      }
 
       const [{ insertId: iconId }] = await conn
         .query<ResultSetHeader>(
