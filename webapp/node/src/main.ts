@@ -2,6 +2,7 @@ import { spawn } from 'node:child_process'
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { serve } from '@hono/node-server'
+import { triggerPproteinCollect } from './pprotein'
 import { hash, compare } from 'bcrypt'
 import { createPool } from 'mysql2/promise'
 import { CookieStore, sessionMiddleware } from 'hono-sessions'
@@ -133,6 +134,7 @@ app.use('*', async (c, next) => {
 
 // 初期化
 app.post('/api/initialize', async (c) => {
+  triggerPproteinCollect()
   try {
     await runtime.exec(['../sql/init.sh'])
     return c.json({ language: 'node' })
