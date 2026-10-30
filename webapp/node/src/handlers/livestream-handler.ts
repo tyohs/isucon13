@@ -7,6 +7,7 @@ import {
   LivestreamResponse,
   fillLivestreamResponse,
 } from '../utils/fill-livestream-response'
+import { fillLivestreamResponses } from '../utils/fill-livestream-responses'
 import {
   LivecommentReportResponse,
   fillLivecommentReportResponse,
@@ -174,15 +175,26 @@ export const searchLivestreamsHandler = async (
         )
         .catch(throwErrorWith('failed to get keyTaggedLivestreams'))
 
-      for (const livestreamTag of livestreamTags) {
-        const [[livestream]] = await conn
+      if (livestreamTags.length > 0) {
+        const livestreamIds = [
+          ...new Set(livestreamTags.map((tag) => tag.livestream_id)),
+        ]
+        const [taggedLivestreams] = await conn
           .query<(LivestreamsModel & RowDataPacket)[]>(
-            'SELECT * FROM livestreams WHERE id = ?',
-            [livestreamTag.livestream_id],
+            'SELECT * FROM livestreams WHERE id IN (?)',
+            [livestreamIds],
           )
           .catch(throwErrorWith('failed to get livestreams'))
-
-        livestreams.push(livestream)
+        const livestreamsById = new Map(
+          taggedLivestreams.map((livestream) => [livestream.id, livestream]),
+        )
+        // 検索で得た順序と、同じ配信に複数タグが一致した場合の重複を保つ。
+        for (const livestreamTag of livestreamTags) {
+          const livestream = livestreamsById.get(livestreamTag.livestream_id)
+          if (!livestream)
+            throw new Error('not found livestream that has the given id')
+          livestreams.push(livestream)
+        }
       }
     } else {
       // 検索条件なし
@@ -203,15 +215,11 @@ export const searchLivestreamsHandler = async (
       livestreams.push(...results)
     }
 
-    const livestreamResponses: LivestreamResponse[] = []
-    for (const livestream of livestreams) {
-      const livestreamResponse = await fillLivestreamResponse(
-        conn,
-        livestream,
-        c.get('runtime').fallbackUserIcon,
-      ).catch(throwErrorWith('failed to fill livestream'))
-      livestreamResponses.push(livestreamResponse)
-    }
+    const livestreamResponses = await fillLivestreamResponses(
+      conn,
+      livestreams,
+      c.get('runtime').fallbackUserIcon,
+    ).catch(throwErrorWith('failed to fill livestream'))
 
     await conn.commit().catch(throwErrorWith('failed to commit'))
 

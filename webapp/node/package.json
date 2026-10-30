@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "tsx watch src/main.ts",
+    "test": "tsx --test src/utils/*.test.ts",
     "format": "prettier -w src",
     "lint": "eslint --fix src"
   },
