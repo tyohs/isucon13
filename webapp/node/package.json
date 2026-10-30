@@ -4,6 +4,7 @@
   "scripts": {
     "start": "tsx watch src/main.ts",
     "test": "tsx --test src/utils/*.test.ts",
+    "test:moderation:mysql": "tsx --test tests/moderation.mysql.test.ts",
     "format": "prettier -w src",
     "lint": "eslint --fix src"
   },

@@ -334,36 +334,17 @@ export const moderateHandler = [
 
       // NGワードにヒットする過去の投稿も全削除する
       for (const ngword of ngwords) {
-        // ライブコメント一覧取得
-        const [livecomments] = await conn
-          .query<(LivecommentsModel & RowDataPacket)[]>(
-            'SELECT * FROM livecomments',
+        // 従来の文字列リテラル同士のLIKEと同じ、接続の照合順序で比較する。
+        await conn
+          .query(
+            `DELETE FROM livecomments
+             WHERE livestream_id = ?
+               AND CAST(comment AS CHAR) LIKE CONCAT('%', ?, '%')`,
+            [livestreamId, ngword.word],
           )
-          .catch(throwErrorWith('failed to get livecomments'))
-
-        for (const livecomment of livecomments) {
-          await conn
-            .query(
-              `
-                DELETE FROM livecomments
-                WHERE
-                id = ? AND
-                livestream_id = ? AND
-                (SELECT COUNT(*)
-                FROM
-                (SELECT ? AS text) AS texts
-                INNER JOIN
-                (SELECT CONCAT('%', ?, '%')	AS pattern) AS patterns
-                ON texts.text LIKE patterns.pattern) >= 1;
-              `,
-              [livecomment.id, livestreamId, livecomment.comment, ngword.word],
-            )
-            .catch(
-              throwErrorWith(
-                'failed to delete old livecomments that hit spams',
-              ),
-            )
-        }
+          .catch(
+            throwErrorWith('failed to delete old livecomments that hit spams'),
+          )
       }
 
       await conn.commit().catch(throwErrorWith('failed to commit'))
