@@ -11,6 +11,19 @@
     pprotein_version: "{{ lookup('env', 'PPROTEIN_VERSION') }}"
     pprotein_host: "{{ lookup('env', 'PPROTEIN_HOST') }}"
   tasks:
+    - name: Check for the PowerDNS repository signing key
+      ansible.builtin.stat:
+        path: /etc/apt/keyrings/auth-48-pub.asc
+      register: powerdns_signing_key
+
+    - name: Refresh the PowerDNS repository signing key
+      ansible.builtin.get_url:
+        url: https://repo.powerdns.com/FD380FBB-pub.asc
+        dest: /etc/apt/keyrings/auth-48-pub.asc
+        mode: "0644"
+        force: true
+      when: powerdns_signing_key.stat.exists
+
     - name: Install packages
       ansible.builtin.apt:
         name: [htop, jq, unzip, graphviz, rsync, git]

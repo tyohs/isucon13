@@ -1,0 +1,1023 @@
+{
+  "schema_version": 1,
+  "collected_at": "2026-10-30T06:28:15.935873+00:00",
+  "hostname": "ip-172-31-5-118",
+  "hardware": {
+    "os": "Ubuntu 22.04.3 LTS",
+    "architecture": "x86_64",
+    "vcpus": 2,
+    "cpu_model": "AMD EPYC 7R32",
+    "virtualization": "amazon",
+    "memory_bytes": 4034564096,
+    "swap_bytes": 0,
+    "root_disk": {
+      "total_bytes": 16455237632,
+      "used_bytes": 9980608512,
+      "available_bytes": 6457851904
+    }
+  },
+  "software": [
+    {
+      "name": "nginx",
+      "version": "nginx/1.18.0",
+      "path": "/usr/sbin/nginx",
+      "source": "installed"
+    },
+    {
+      "name": "mysql",
+      "version": "Ver 8.0.35-0ubuntu0.22.04.1",
+      "path": "/usr/bin/mysql",
+      "source": "installed"
+    },
+    {
+      "name": "node",
+      "version": "v20.10.0",
+      "path": "/home/isucon/local/node/bin/node",
+      "source": "installed"
+    }
+  ],
+  "processes": [
+    {
+      "name": "(sd-pam)",
+      "pids": [
+        1166
+      ]
+    },
+    {
+      "name": "acpi_thermal_pm",
+      "pids": [
+        50
+      ]
+    },
+    {
+      "name": "acpid",
+      "pids": [
+        386
+      ]
+    },
+    {
+      "name": "agetty",
+      "pids": [
+        414,
+        418
+      ]
+    },
+    {
+      "name": "amazon-ssm-agen",
+      "pids": [
+        1822
+      ]
+    },
+    {
+      "name": "apt.systemd.dai",
+      "pids": [
+        12978,
+        12984
+      ]
+    },
+    {
+      "name": "ata_sff",
+      "pids": [
+        41
+      ]
+    },
+    {
+      "name": "bash",
+      "pids": [
+        1252
+      ]
+    },
+    {
+      "name": "blkcg_punt_bio",
+      "pids": [
+        39
+      ]
+    },
+    {
+      "name": "charger_manager",
+      "pids": [
+        71
+      ]
+    },
+    {
+      "name": "chronyd",
+      "pids": [
+        446,
+        456
+      ]
+    },
+    {
+      "name": "cpuhp/0",
+      "pids": [
+        18
+      ]
+    },
+    {
+      "name": "cpuhp/1",
+      "pids": [
+        19
+      ]
+    },
+    {
+      "name": "cron",
+      "pids": [
+        391
+      ]
+    },
+    {
+      "name": "cryptd",
+      "pids": [
+        184
+      ]
+    },
+    {
+      "name": "dbus-daemon",
+      "pids": [
+        392
+      ]
+    },
+    {
+      "name": "devfreq_wq",
+      "pids": [
+        44
+      ]
+    },
+    {
+      "name": "ecryptfs-kthread",
+      "pids": [
+        48
+      ]
+    },
+    {
+      "name": "edac-poller",
+      "pids": [
+        43
+      ]
+    },
+    {
+      "name": "ena",
+      "pids": [
+        207
+      ]
+    },
+    {
+      "name": "ext4-rsv-conver",
+      "pids": [
+        73
+      ]
+    },
+    {
+      "name": "idle_inject/0",
+      "pids": [
+        16
+      ]
+    },
+    {
+      "name": "idle_inject/1",
+      "pids": [
+        20
+      ]
+    },
+    {
+      "name": "inet_frag_wq",
+      "pids": [
+        26
+      ]
+    },
+    {
+      "name": "ipv6_addrconf",
+      "pids": [
+        56
+      ]
+    },
+    {
+      "name": "irqbalance",
+      "pids": [
+        399
+      ]
+    },
+    {
+      "name": "isupipe",
+      "pids": [
+        12734
+      ]
+    },
+    {
+      "name": "jbd2/nvme0n1p1-8",
+      "pids": [
+        72
+      ]
+    },
+    {
+      "name": "kaluad",
+      "pids": [
+        151
+      ]
+    },
+    {
+      "name": "kauditd",
+      "pids": [
+        27
+      ]
+    },
+    {
+      "name": "kblockd",
+      "pids": [
+        38
+      ]
+    },
+    {
+      "name": "kcompactd0",
+      "pids": [
+        34
+      ]
+    },
+    {
+      "name": "kdevtmpfs",
+      "pids": [
+        25
+      ]
+    },
+    {
+      "name": "khugepaged",
+      "pids": [
+        36
+      ]
+    },
+    {
+      "name": "khungtaskd",
+      "pids": [
+        29
+      ]
+    },
+    {
+      "name": "kintegrityd",
+      "pids": [
+        37
+      ]
+    },
+    {
+      "name": "kmpath_handlerd",
+      "pids": [
+        154
+      ]
+    },
+    {
+      "name": "kmpath_rdacd",
+      "pids": [
+        152
+      ]
+    },
+    {
+      "name": "kmpathd",
+      "pids": [
+        153
+      ]
+    },
+    {
+      "name": "ksmd",
+      "pids": [
+        35
+      ]
+    },
+    {
+      "name": "ksoftirqd/0",
+      "pids": [
+        13
+      ]
+    },
+    {
+      "name": "ksoftirqd/1",
+      "pids": [
+        22
+      ]
+    },
+    {
+      "name": "kstrp",
+      "pids": [
+        64
+      ]
+    },
+    {
+      "name": "kswapd0",
+      "pids": [
+        47
+      ]
+    },
+    {
+      "name": "kthreadd",
+      "pids": [
+        2
+      ]
+    },
+    {
+      "name": "kthrotld",
+      "pids": [
+        49
+      ]
+    },
+    {
+      "name": "kworker/0:0-cgroup_destroy",
+      "pids": [
+        2249
+      ]
+    },
+    {
+      "name": "kworker/0:0H-events_highpri",
+      "pids": [
+        8
+      ]
+    },
+    {
+      "name": "kworker/0:1-events",
+      "pids": [
+        6121
+      ]
+    },
+    {
+      "name": "kworker/0:1H-kblockd",
+      "pids": [
+        46
+      ]
+    },
+    {
+      "name": "kworker/0:2-cgroup_destroy",
+      "pids": [
+        12424
+      ]
+    },
+    {
+      "name": "kworker/0:3-cgwb_release",
+      "pids": [
+        12679
+      ]
+    },
+    {
+      "name": "kworker/0:59-events",
+      "pids": [
+        1626
+      ]
+    },
+    {
+      "name": "kworker/1:0-cgroup_destroy",
+      "pids": [
+        2248
+      ]
+    },
+    {
+      "name": "kworker/1:0H-events_highpri",
+      "pids": [
+        24
+      ]
+    },
+    {
+      "name": "kworker/1:1-cgroup_destroy",
+      "pids": [
+        2958
+      ]
+    },
+    {
+      "name": "kworker/1:1H-kblockd",
+      "pids": [
+        74
+      ]
+    },
+    {
+      "name": "kworker/1:2-events",
+      "pids": [
+        6171
+      ]
+    },
+    {
+      "name": "kworker/1:62-cgroup_destroy",
+      "pids": [
+        1629
+      ]
+    },
+    {
+      "name": "kworker/u4:0-events_unbound",
+      "pids": [
+        2329
+      ]
+    },
+    {
+      "name": "kworker/u4:1-ext4-rsv-conversion",
+      "pids": [
+        5695
+      ]
+    },
+    {
+      "name": "kworker/u4:2-events_unbound",
+      "pids": [
+        1508
+      ]
+    },
+    {
+      "name": "kworker/u4:3-events_unbound",
+      "pids": [
+        12580
+      ]
+    },
+    {
+      "name": "kworker/u4:4-ext4-rsv-conversion",
+      "pids": [
+        238
+      ]
+    },
+    {
+      "name": "kworker/u4:5-events_unbound",
+      "pids": [
+        12581
+      ]
+    },
+    {
+      "name": "kworker/u4:6-events_unbound",
+      "pids": [
+        12582
+      ]
+    },
+    {
+      "name": "kworker/u4:7-writeback",
+      "pids": [
+        12617
+      ]
+    },
+    {
+      "name": "kworker/u4:8",
+      "pids": [
+        12618
+      ]
+    },
+    {
+      "name": "kworker/u5:0",
+      "pids": [
+        67
+      ]
+    },
+    {
+      "name": "md",
+      "pids": [
+        42
+      ]
+    },
+    {
+      "name": "migration/0",
+      "pids": [
+        15
+      ]
+    },
+    {
+      "name": "migration/1",
+      "pids": [
+        21
+      ]
+    },
+    {
+      "name": "mld",
+      "pids": [
+        55
+      ]
+    },
+    {
+      "name": "mm_percpu_wq",
+      "pids": [
+        10
+      ]
+    },
+    {
+      "name": "multipathd",
+      "pids": [
+        155
+      ]
+    },
+    {
+      "name": "mysqld",
+      "pids": [
+        12688
+      ]
+    },
+    {
+      "name": "netns",
+      "pids": [
+        6
+      ]
+    },
+    {
+      "name": "networkd-dispat",
+      "pids": [
+        401
+      ]
+    },
+    {
+      "name": "nginx",
+      "pids": [
+        12745,
+        12746,
+        12747
+      ]
+    },
+    {
+      "name": "nvme-auth-wq",
+      "pids": [
+        54
+      ]
+    },
+    {
+      "name": "nvme-delete-wq",
+      "pids": [
+        53
+      ]
+    },
+    {
+      "name": "nvme-reset-wq",
+      "pids": [
+        52
+      ]
+    },
+    {
+      "name": "nvme-wq",
+      "pids": [
+        51
+      ]
+    },
+    {
+      "name": "oom_reaper",
+      "pids": [
+        31
+      ]
+    },
+    {
+      "name": "packagekitd",
+      "pids": [
+        2742
+      ]
+    },
+    {
+      "name": "pdns_server",
+      "pids": [
+        809
+      ]
+    },
+    {
+      "name": "polkitd",
+      "pids": [
+        491
+      ]
+    },
+    {
+      "name": "pprotein",
+      "pids": [
+        12970
+      ]
+    },
+    {
+      "name": "pprotein-agent",
+      "pids": [
+        12889
+      ]
+    },
+    {
+      "name": "ps",
+      "pids": [
+        13122
+      ]
+    },
+    {
+      "name": "python3",
+      "pids": [
+        13115
+      ]
+    },
+    {
+      "name": "rcu_gp",
+      "pids": [
+        3
+      ]
+    },
+    {
+      "name": "rcu_par_gp",
+      "pids": [
+        4
+      ]
+    },
+    {
+      "name": "rcu_sched",
+      "pids": [
+        14
+      ]
+    },
+    {
+      "name": "rcu_tasks_rude_kthread",
+      "pids": [
+        11
+      ]
+    },
+    {
+      "name": "rcu_tasks_trace_kthread",
+      "pids": [
+        12
+      ]
+    },
+    {
+      "name": "rsyslogd",
+      "pids": [
+        403
+      ]
+    },
+    {
+      "name": "slub_flushwq",
+      "pids": [
+        5
+      ]
+    },
+    {
+      "name": "snapd",
+      "pids": [
+        407
+      ]
+    },
+    {
+      "name": "ssh-agent",
+      "pids": [
+        2242
+      ]
+    },
+    {
+      "name": "sshd",
+      "pids": [
+        589,
+        864,
+        1250,
+        6190,
+        6245,
+        13048,
+        13112
+      ]
+    },
+    {
+      "name": "systemd",
+      "pids": [
+        1,
+        1165
+      ]
+    },
+    {
+      "name": "systemd-journal",
+      "pids": [
+        113
+      ]
+    },
+    {
+      "name": "systemd-logind",
+      "pids": [
+        408
+      ]
+    },
+    {
+      "name": "systemd-network",
+      "pids": [
+        340
+      ]
+    },
+    {
+      "name": "systemd-resolve",
+      "pids": [
+        342
+      ]
+    },
+    {
+      "name": "systemd-udevd",
+      "pids": [
+        157
+      ]
+    },
+    {
+      "name": "tls-strp",
+      "pids": [
+        587
+      ]
+    },
+    {
+      "name": "tpm_dev_wq",
+      "pids": [
+        40
+      ]
+    },
+    {
+      "name": "unattended-upgr",
+      "pids": [
+        462,
+        13066
+      ]
+    },
+    {
+      "name": "watchdogd",
+      "pids": [
+        45
+      ]
+    },
+    {
+      "name": "writeback",
+      "pids": [
+        32
+      ]
+    },
+    {
+      "name": "zswap-shrink",
+      "pids": [
+        66
+      ]
+    }
+  ],
+  "services": [
+    "acpid.service",
+    "chrony.service",
+    "cron.service",
+    "dbus.service",
+    "getty@tty1.service",
+    "irqbalance.service",
+    "isupipe-go.service",
+    "multipathd.service",
+    "mysql.service",
+    "networkd-dispatcher.service",
+    "nginx.service",
+    "packagekit.service",
+    "pdns.service",
+    "polkit.service",
+    "pprotein-agent.service",
+    "pprotein.service",
+    "rsyslog.service",
+    "serial-getty@ttyS0.service",
+    "snap.amazon-ssm-agent.amazon-ssm-agent.service",
+    "snapd.service",
+    "ssh.service",
+    "systemd-journald.service",
+    "systemd-logind.service",
+    "systemd-networkd.service",
+    "systemd-resolved.service",
+    "systemd-udevd.service",
+    "unattended-upgrades.service",
+    "user@1100.service"
+  ],
+  "listening_ports": [
+    "udp UNCONN 0      0                0.0.0.0:53    0.0.0.0:*",
+    "udp UNCONN 0      0      172.31.5.118%ens5:68    0.0.0.0:*",
+    "udp UNCONN 0      0              127.0.0.1:323   0.0.0.0:*",
+    "udp UNCONN 0      0                   [::]:53       [::]:*",
+    "udp UNCONN 0      0                  [::1]:323      [::]:*",
+    "tcp LISTEN 0      10             127.0.0.1:8081  0.0.0.0:*",
+    "tcp LISTEN 0      151            127.0.0.1:3306  0.0.0.0:*",
+    "tcp LISTEN 0      511              0.0.0.0:80    0.0.0.0:*",
+    "tcp LISTEN 0      128              0.0.0.0:22    0.0.0.0:*",
+    "tcp LISTEN 0      128              0.0.0.0:53    0.0.0.0:*",
+    "tcp LISTEN 0      70             127.0.0.1:33060 0.0.0.0:*",
+    "tcp LISTEN 0      511              0.0.0.0:443   0.0.0.0:*",
+    "tcp LISTEN 0      4096                   *:8080        *:*",
+    "tcp LISTEN 0      4096                   *:19000       *:*",
+    "tcp LISTEN 0      4096                   *:9000        *:*",
+    "tcp LISTEN 0      128                 [::]:22       [::]:*",
+    "tcp LISTEN 0      128                 [::]:53       [::]:*"
+  ],
+  "nginx": {
+    "status": "ok",
+    "directives": [
+      {
+        "file": "/etc/nginx/sites-enabled/isupipe.conf",
+        "line": 2,
+        "directive": "listen",
+        "value": "80 default_server"
+      },
+      {
+        "file": "/etc/nginx/sites-enabled/isupipe.conf",
+        "line": 3,
+        "directive": "server_name",
+        "value": "_"
+      },
+      {
+        "file": "/etc/nginx/sites-enabled/isupipe.conf",
+        "line": 5,
+        "directive": "root",
+        "value": "/var/www/html"
+      },
+      {
+        "file": "/etc/nginx/sites-enabled/isupipe.conf",
+        "line": 6,
+        "directive": "location",
+        "value": "/"
+      },
+      {
+        "file": "/etc/nginx/sites-enabled/isupipe.conf",
+        "line": 12,
+        "directive": "listen",
+        "value": "443 ssl default_server"
+      },
+      {
+        "file": "/etc/nginx/sites-enabled/isupipe.conf",
+        "line": 13,
+        "directive": "server_name",
+        "value": "_"
+      },
+      {
+        "file": "/etc/nginx/sites-enabled/isupipe.conf",
+        "line": 15,
+        "directive": "root",
+        "value": "/var/www/html"
+      },
+      {
+        "file": "/etc/nginx/sites-enabled/isupipe.conf",
+        "line": 23,
+        "directive": "location",
+        "value": "/"
+      },
+      {
+        "file": "/etc/nginx/sites-enabled/isupipe.conf",
+        "line": 29,
+        "directive": "listen",
+        "value": "443 ssl"
+      },
+      {
+        "file": "/etc/nginx/sites-enabled/isupipe.conf",
+        "line": 30,
+        "directive": "server_name",
+        "value": "u.isucon.local"
+      },
+      {
+        "file": "/etc/nginx/sites-enabled/isupipe.conf",
+        "line": 31,
+        "directive": "server_name",
+        "value": "*.u.isucon.local"
+      },
+      {
+        "file": "/etc/nginx/sites-enabled/isupipe.conf",
+        "line": 40,
+        "directive": "root",
+        "value": "/home/isucon/webapp/public/"
+      },
+      {
+        "file": "/etc/nginx/sites-enabled/isupipe.conf",
+        "line": 41,
+        "directive": "location",
+        "value": "/"
+      },
+      {
+        "file": "/etc/nginx/sites-enabled/isupipe.conf",
+        "line": 44,
+        "directive": "location",
+        "value": "/api"
+      },
+      {
+        "file": "/etc/nginx/sites-enabled/isupipe.conf",
+        "line": 46,
+        "directive": "proxy_pass",
+        "value": "http://localhost:8080"
+      }
+    ]
+  },
+  "mysql": {
+    "status": "ok",
+    "version": "8.0.35-0ubuntu0.22.04.1",
+    "tables": [
+      {
+        "database": "isudns",
+        "table": "comments",
+        "engine": "InnoDB",
+        "estimated_rows": 0,
+        "size_bytes": 16384
+      },
+      {
+        "database": "isudns",
+        "table": "cryptokeys",
+        "engine": "InnoDB",
+        "estimated_rows": 0,
+        "size_bytes": 16384
+      },
+      {
+        "database": "isudns",
+        "table": "domainmetadata",
+        "engine": "InnoDB",
+        "estimated_rows": 0,
+        "size_bytes": 16384
+      },
+      {
+        "database": "isudns",
+        "table": "domains",
+        "engine": "InnoDB",
+        "estimated_rows": 0,
+        "size_bytes": 16384
+      },
+      {
+        "database": "isudns",
+        "table": "records",
+        "engine": "InnoDB",
+        "estimated_rows": 4,
+        "size_bytes": 49152
+      },
+      {
+        "database": "isudns",
+        "table": "supermasters",
+        "engine": "InnoDB",
+        "estimated_rows": 0,
+        "size_bytes": 16384
+      },
+      {
+        "database": "isudns",
+        "table": "tsigkeys",
+        "engine": "InnoDB",
+        "estimated_rows": 0,
+        "size_bytes": 16384
+      },
+      {
+        "database": "isupipe",
+        "table": "icons",
+        "engine": "InnoDB",
+        "estimated_rows": 0,
+        "size_bytes": 16384
+      },
+      {
+        "database": "isupipe",
+        "table": "livecomment_reports",
+        "engine": "InnoDB",
+        "estimated_rows": 0,
+        "size_bytes": 16384
+      },
+      {
+        "database": "isupipe",
+        "table": "livecomments",
+        "engine": "InnoDB",
+        "estimated_rows": 0,
+        "size_bytes": 16384
+      },
+      {
+        "database": "isupipe",
+        "table": "livestream_tags",
+        "engine": "InnoDB",
+        "estimated_rows": 0,
+        "size_bytes": 16384
+      },
+      {
+        "database": "isupipe",
+        "table": "livestream_viewers_history",
+        "engine": "InnoDB",
+        "estimated_rows": 0,
+        "size_bytes": 16384
+      },
+      {
+        "database": "isupipe",
+        "table": "livestreams",
+        "engine": "InnoDB",
+        "estimated_rows": 0,
+        "size_bytes": 16384
+      },
+      {
+        "database": "isupipe",
+        "table": "ng_words",
+        "engine": "InnoDB",
+        "estimated_rows": 0,
+        "size_bytes": 16384
+      },
+      {
+        "database": "isupipe",
+        "table": "reactions",
+        "engine": "InnoDB",
+        "estimated_rows": 0,
+        "size_bytes": 16384
+      },
+      {
+        "database": "isupipe",
+        "table": "reservation_slots",
+        "engine": "InnoDB",
+        "estimated_rows": 0,
+        "size_bytes": 16384
+      },
+      {
+        "database": "isupipe",
+        "table": "tags",
+        "engine": "InnoDB",
+        "estimated_rows": 0,
+        "size_bytes": 32768
+      },
+      {
+        "database": "isupipe",
+        "table": "themes",
+        "engine": "InnoDB",
+        "estimated_rows": 0,
+        "size_bytes": 16384
+      },
+      {
+        "database": "isupipe",
+        "table": "users",
+        "engine": "InnoDB",
+        "estimated_rows": 0,
+        "size_bytes": 32768
+      }
+    ],
+    "row_count_mode": "estimated"
+  },
+  "postgresql": {
+    "status": "not-found",
+    "databases": [],
+    "tables": []
+  },
+  "warnings": [],
+  "target": "s3"
+}
