@@ -3,12 +3,7 @@ import { RowDataPacket } from 'mysql2/promise'
 import { HonoEnvironment } from '../types/application'
 import { verifyUserSessionMiddleware } from '../middlewares/verify-user-session-middleare'
 import { throwErrorWith } from '../utils/throw-error-with'
-import {
-  LivecommentsModel,
-  LivestreamsModel,
-  ReactionsModel,
-  UserModel,
-} from '../types/models'
+import { LivestreamsModel, ReactionsModel, UserModel } from '../types/models'
 import { atoi } from '../utils/integer'
 
 // GET /api/user/:username/statistics
@@ -35,107 +30,64 @@ export const getUserStatisticsHandler = [
         return c.json('not found user that has the given username', 404)
       }
 
-      // ランク算出
+      // 個別に集計し、リアクションとコメントの JOIN による件数の重複を避ける。
+      const [reactionTotals] = await conn
+        .query<({ user_id: number; total: number } & RowDataPacket)[]>(
+          `SELECT l.user_id, COUNT(*) AS total
+           FROM livestreams l
+           INNER JOIN reactions r ON r.livestream_id = l.id
+           GROUP BY l.user_id`,
+        )
+        .catch(throwErrorWith('failed to count reactions'))
+      const [commentTotals] = await conn
+        .query<
+          ({
+            user_id: number
+            total: number
+            tips: string | number
+          } & RowDataPacket)[]
+        >(
+          `SELECT l.user_id, COUNT(*) AS total, SUM(c.tip) AS tips
+           FROM livestreams l
+           INNER JOIN livecomments c ON c.livestream_id = l.id
+           GROUP BY l.user_id`,
+        )
+        .catch(throwErrorWith('failed to count livecomments and tips'))
+      const reactionsByUser = new Map(
+        reactionTotals.map((r) => [r.user_id, r.total]),
+      )
+      const commentsByUser = new Map(commentTotals.map((r) => [r.user_id, r]))
       const [users] = await conn
-        .query<(UserModel & RowDataPacket)[]>('SELECT * FROM users')
+        .query<(Pick<UserModel, 'id' | 'name'> & RowDataPacket)[]>(
+          'SELECT id, name FROM users',
+        )
         .catch(throwErrorWith('failed to get users'))
-
-      const ranking: { username: string; score: number }[] = []
-      for (const user of users) {
-        const [[{ 'COUNT(*)': reaction }]] = await conn
-          .query<({ 'COUNT(*)': number } & RowDataPacket)[]>(
-            `
-              SELECT COUNT(*) FROM users u
-              INNER JOIN livestreams l ON l.user_id = u.id
-              INNER JOIN reactions r ON r.livestream_id = l.id
-              WHERE u.id = ?
-            `,
-            [user.id],
-          )
-          .catch(throwErrorWith('failed to count reactions'))
-
-        const [[{ 'IFNULL(SUM(l2.tip), 0)': tips }]] = await conn
-          .query<
-            ({ 'IFNULL(SUM(l2.tip), 0)': string | number } & RowDataPacket)[]
-          >(
-            `
-              SELECT IFNULL(SUM(l2.tip), 0) FROM users u
-              INNER JOIN livestreams l ON l.user_id = u.id	
-              INNER JOIN livecomments l2 ON l2.livestream_id = l.id
-              WHERE u.id = ?
-            `,
-            [user.id],
-          )
-          .catch(throwErrorWith('failed to count tips'))
-
-        ranking.push({
-          username: user.name,
-          score: reaction + Number(tips),
-        })
-      }
-
+      const ranking = users.map((u) => ({
+        username: u.name,
+        score:
+          (reactionsByUser.get(u.id) ?? 0) +
+          Number(commentsByUser.get(u.id)?.tips ?? 0),
+      }))
+      // 同点時の順位は既存と同じ localeCompare で決める。
       ranking.sort((a, b) => {
         if (a.score === b.score) return a.username.localeCompare(b.username)
         return a.score - b.score
       })
+      const rank =
+        ranking.length - ranking.findIndex((r) => r.username === username)
+      const totalReactions = reactionsByUser.get(user.id) ?? 0
+      const totalLivecomments = commentsByUser.get(user.id)?.total ?? 0
+      const totalTip = Number(commentsByUser.get(user.id)?.tips ?? 0)
 
-      let rank = 1
-      for (const r of ranking.toReversed()) {
-        if (r.username === username) {
-          break
-        }
-        rank++
-      }
-
-      // リアクション数
-      const [[{ 'COUNT(*)': totalReactions }]] = await conn
-        .query<({ 'COUNT(*)': number } & RowDataPacket)[]>(
-          `
-            SELECT COUNT(*) FROM users u 
-            INNER JOIN livestreams l ON l.user_id = u.id 
-            INNER JOIN reactions r ON r.livestream_id = l.id
-            WHERE u.name = ?
-          `,
-          [username],
-        )
-        .catch(throwErrorWith('failed to count reactions'))
-
-      // ライブコメント数、チップ合計
-      let totalLivecomments = 0
-      let totalTip = 0
-      const [livestreams] = await conn
-        .query<(LivestreamsModel & RowDataPacket)[]>(
-          `SELECT * FROM livestreams WHERE user_id = ?`,
+      const [[{ total: viewersCount }]] = await conn
+        .query<({ total: number } & RowDataPacket)[]>(
+          `SELECT COUNT(*) AS total
+           FROM livestreams l
+           INNER JOIN livestream_viewers_history h ON h.livestream_id = l.id
+           WHERE l.user_id = ?`,
           [user.id],
         )
-        .catch(throwErrorWith('failed to get livestreams'))
-
-      for (const livestream of livestreams) {
-        const [livecomments] = await conn
-          .query<(LivecommentsModel & RowDataPacket)[]>(
-            `SELECT * FROM livecomments WHERE livestream_id = ?`,
-            [livestream.id],
-          )
-          .catch(throwErrorWith('failed to get livecomments'))
-
-        for (const livecomment of livecomments) {
-          totalTip += livecomment.tip
-          totalLivecomments++
-        }
-      }
-
-      // 合計視聴者数
-      let viewersCount = 0
-      for (const livestream of livestreams) {
-        const [[{ 'COUNT(*)': livestreamViewerCount }]] = await conn
-          .query<({ 'COUNT(*)': number } & RowDataPacket)[]>(
-            `SELECT COUNT(*) FROM livestream_viewers_history WHERE livestream_id = ?`,
-            [livestream.id],
-          )
-          .catch(throwErrorWith('failed to get livestream_view_history'))
-
-        viewersCount += livestreamViewerCount
-      }
+        .catch(throwErrorWith('failed to get livestream_view_history'))
 
       // お気に入り絵文字
       const [[favoriteEmoji]] = await conn
